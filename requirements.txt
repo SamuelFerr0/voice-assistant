@@ -1,0 +1,9 @@
+SpeechRecognition
+pyttsx3
+pyautogui
+pyaudio
+python-dotenv
+pyperclip
+google-genai
+anthropic
+vosk
