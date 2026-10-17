@@ -1,12 +1,4 @@
-"""Janela animada do Jarvis.
 
-A esfera muda de cor e de movimento conforme o que ele está fazendo:
-esperando (azul), ouvindo (verde), pensando (amarelo) e falando (ciano).
-Embaixo aparece o que você disse e o que ele respondeu.
-
-O resto do código só chama definir_estado() e registrar(). Se a janela não
-estiver aberta, essas funções não fazem nada.
-"""
 
 import math
 import queue
@@ -32,7 +24,7 @@ _fila = queue.Queue()
 _ativa = False
 
 
-# Estas três funções podem ser chamadas de qualquer thread.
+
 def definir_estado(nome):
     if _ativa:
         _fila.put(("estado", nome))
@@ -49,7 +41,7 @@ def fechar():
 
 
 def misturar(a, b, f):
-    """Mistura duas cores em hexadecimal: f=0 devolve a, f=1 devolve b."""
+
     ra, ga, ba = int(a[1:3], 16), int(a[3:5], 16), int(a[5:7], 16)
     rb, gb, bb = int(b[1:3], 16), int(b[3:5], 16), int(b[5:7], 16)
     r = round(ra + (rb - ra) * f)
@@ -59,7 +51,7 @@ def misturar(a, b, f):
 
 
 def nivel_alvo(estado, t):
-    """Quanto a esfera deve 'inchar' (de 0 a 1) em cada estado."""
+
     if estado == "ouvindo":
         return 0.45 + 0.35 * math.sin(t * 5)
     if estado == "pensando":
@@ -116,7 +108,7 @@ class Janela:
         if self.fechando:
             return
         self._desenhar(time.time() - self.inicio)
-        self.raiz.after(33, self._tick)  # cerca de 30 quadros por segundo
+        self.raiz.after(33, self._tick)
 
     def _processar_fila(self):
         while True:
@@ -152,10 +144,10 @@ class Janela:
         base = min(largura, altura) * 0.17
         cor = CORES.get(self.estado, CORES["esperando"])
 
-        # Suaviza o movimento para a esfera não "tremer"
+
         self.nivel += (nivel_alvo(self.estado, t) - self.nivel) * 0.25
 
-        # Anéis de brilho, do maior para o menor
+
         for i in range(4, 0, -1):
             raio = base + i * 15 + self.nivel * 12 * i
             c.create_oval(
@@ -163,14 +155,14 @@ class Janela:
                 fill=misturar(FUNDO, cor, 0.10 * (5 - i)), outline="",
             )
 
-        # Esfera central e um reflexo para dar volume
+
         nucleo = base + self.nivel * 10
         c.create_oval(cx - nucleo, cy - nucleo, cx + nucleo, cy + nucleo, fill=cor, outline="")
         rx, ry, rr = cx - nucleo * 0.3, cy - nucleo * 0.3, nucleo * 0.4
         c.create_oval(rx - rr, ry - rr, rx + rr, ry + rr,
                       fill=misturar(cor, "#ffffff", 0.45), outline="")
 
-        # Pensando: dois arcos girando em volta
+
         if self.estado == "pensando":
             r = base + 40
             angulo = (t * 240) % 360
@@ -183,11 +175,7 @@ class Janela:
 
 
 def iniciar(funcao):
-    """Abre a janela e roda `funcao` (o Jarvis) numa thread.
 
-    A janela fecha quando a função termina. Fechar a janela encerra o Jarvis.
-    Levanta ImportError se o tkinter não estiver instalado.
-    """
     global _ativa
     janela = Janela()
     _ativa = True

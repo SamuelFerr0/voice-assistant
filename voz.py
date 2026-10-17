@@ -11,11 +11,11 @@ load_dotenv()
 
 _voz = pyttsx3.init()
 _rec = sr.Recognizer()
-_rec.operation_timeout = 5  # se a internet estiver muito lenta, desiste do Google em 5s
+_rec.operation_timeout = 5
 
 
 def _escolher_voz_portugues():
-    """Usa uma voz em português do Windows, se tiver alguma instalada."""
+
     try:
         for v in _voz.getProperty("voices"):
             texto = (v.id + " " + (v.name or "")).lower().replace("-", "").replace("_", "")
@@ -30,8 +30,7 @@ def _escolher_voz_portugues():
 
 _escolher_voz_portugues()
 
-# Voz offline (Vosk): reserva para quando estiver sem internet.
-# Só liga se VOSK_MODEL_PATH (no .env) apontar para uma pasta de modelo.
+
 _modelo = None
 _caminho = os.getenv("VOSK_MODEL_PATH")
 if _caminho and os.path.isdir(_caminho):
@@ -60,14 +59,14 @@ def _reconhecer_offline(audio):
     from vosk import KaldiRecognizer
 
     reconhecedor = KaldiRecognizer(_modelo, 16000)
-    # Reaproveita o mesmo áudio que o microfone já capturou
+
     dados = audio.get_raw_data(convert_rate=16000, convert_width=2)
     reconhecedor.AcceptWaveform(dados)
     return json.loads(reconhecedor.FinalResult()).get("text", "")
 
 
 def ouvir(estado="ouvindo"):
-    """Escuta o microfone e devolve o texto. Use estado="esperando" para a palavra de ativação."""
+
     global _avisou_offline
 
     esperando = estado == "esperando"
@@ -87,9 +86,9 @@ def ouvir(estado="ouvindo"):
         texto = _rec.recognize_google(audio, language="pt-BR")
         _avisou_offline = False
     except sr.UnknownValueError:
-        return ""  # o Google respondeu, mas não entendeu a fala
+        return ""
     except (sr.RequestError, OSError):
-        # Sem internet (ou internet lenta demais): tenta o modo offline
+
         if not _modelo:
             return ""
         if not _avisou_offline:

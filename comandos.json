@@ -1,37 +1,38 @@
 {
   "janela": true,
+  "interpretar_com_ia": true,
   "ativacao": ["jarvis"],
   "comandos": [
-    {"palavras": ["sair", "desligar"], "tipo": "funcao", "valor": "sair", "fala": "Até mais"},
+    {"descricao": "Desligar o Jarvis", "palavras": ["sair", "desligar"], "tipo": "funcao", "valor": "sair", "fala": "Até mais"},
 
-    {"palavras": ["usar claude"], "tipo": "funcao", "valor": "claude", "fala": "Agora estou usando o Claude"},
-    {"palavras": ["usar gemini"], "tipo": "funcao", "valor": "gemini", "fala": "Agora estou usando o Gemini"},
-    {"palavras": ["esquecer conversa", "limpar conversa"], "tipo": "funcao", "valor": "esquecer", "fala": "Conversa esquecida"},
+    {"descricao": "Trocar a IA para o Claude", "palavras": ["usar claude"], "tipo": "funcao", "valor": "claude", "fala": "Agora estou usando o Claude"},
+    {"descricao": "Trocar a IA para o Gemini", "palavras": ["usar gemini"], "tipo": "funcao", "valor": "gemini", "fala": "Agora estou usando o Gemini"},
+    {"descricao": "Esquecer a conversa até agora", "palavras": ["esquecer conversa", "limpar conversa"], "tipo": "funcao", "valor": "esquecer", "fala": "Conversa esquecida"},
 
-    {"palavras": ["que horas"], "tipo": "funcao", "valor": "hora", "fala": ""},
-    {"palavras": ["que dia", "data de hoje", "qual a data"], "tipo": "funcao", "valor": "data", "fala": ""},
+    {"descricao": "Dizer que horas são", "palavras": ["que horas"], "tipo": "funcao", "valor": "hora", "fala": ""},
+    {"descricao": "Dizer a data de hoje e o dia da semana", "palavras": ["que dia", "data de hoje", "qual a data"], "tipo": "funcao", "valor": "data", "fala": ""},
 
-    {"palavras": ["criar código", "criar função"], "tipo": "funcao", "valor": "criar_codigo", "fala": ""},
-    {"palavras": ["ditar", "escrever"], "tipo": "funcao", "valor": "ditar", "fala": ""},
+    {"descricao": "Criar código por voz (o usuário vai descrever a função depois)", "palavras": ["criar código", "criar função"], "tipo": "funcao", "valor": "criar_codigo", "fala": ""},
+    {"descricao": "Ditar: escrever o que o usuário falar, onde o cursor estiver", "palavras": ["ditar", "escrever"], "tipo": "funcao", "valor": "ditar", "fala": ""},
 
-    {"palavras": ["pycharm"], "tipo": "app", "valor": "pycharm", "fala": "Abrindo o PyCharm"},
-    {"palavras": ["intellij"], "tipo": "app", "valor": "intellij", "fala": "Abrindo o IntelliJ"},
-    {"palavras": ["vs code", "vscode", "visual studio"], "tipo": "app", "valor": "vscode", "fala": "Abrindo o Visual Studio Code"},
+    {"descricao": "Abrir o PyCharm", "palavras": ["pycharm"], "tipo": "app", "valor": "pycharm", "fala": "Abrindo o PyCharm"},
+    {"descricao": "Abrir o IntelliJ", "palavras": ["intellij"], "tipo": "app", "valor": "intellij", "fala": "Abrindo o IntelliJ"},
+    {"descricao": "Abrir o Visual Studio Code", "palavras": ["vs code", "vscode", "visual studio"], "tipo": "app", "valor": "vscode", "fala": "Abrindo o Visual Studio Code"},
 
-    {"palavras": ["navegador"], "tipo": "site", "valor": "https://www.google.com", "fala": "Abrindo o Brave"},
-    {"palavras": ["github"], "tipo": "site", "valor": "https://github.com", "fala": "Abrindo o GitHub"},
-    {"palavras": ["linkedin"], "tipo": "site", "valor": "https://www.linkedin.com", "fala": "Abrindo o LinkedIn"},
-    {"palavras": ["gmail", "e-mail", "email"], "tipo": "site", "valor": "https://mail.google.com", "fala": "Abrindo o Gmail"},
-    {"palavras": ["netflix"], "tipo": "site", "valor": "https://www.netflix.com", "fala": "Abrindo a Netflix"},
-    {"palavras": ["spotify"], "tipo": "site", "valor": "https://open.spotify.com", "fala": "Abrindo o Spotify"},
-    {"palavras": ["shopify"], "tipo": "site", "valor": "https://www.shopify.com/login", "fala": "Abrindo o Shopify"},
+    {"descricao": "Abrir o navegador", "palavras": ["navegador"], "tipo": "site", "valor": "https://www.google.com", "fala": "Abrindo o Brave"},
+    {"descricao": "Abrir o site do GitHub", "palavras": ["github"], "tipo": "site", "valor": "https://github.com", "fala": "Abrindo o GitHub"},
+    {"descricao": "Abrir o LinkedIn", "palavras": ["linkedin"], "tipo": "site", "valor": "https://www.linkedin.com", "fala": "Abrindo o LinkedIn"},
+    {"descricao": "Abrir o Gmail (e-mail)", "palavras": ["gmail", "e-mail", "email"], "tipo": "site", "valor": "https://mail.google.com", "fala": "Abrindo o Gmail"},
+    {"descricao": "Abrir a Netflix", "palavras": ["netflix"], "tipo": "site", "valor": "https://www.netflix.com", "fala": "Abrindo a Netflix"},
+    {"descricao": "Abrir o Spotify", "palavras": ["spotify"], "tipo": "site", "valor": "https://open.spotify.com", "fala": "Abrindo o Spotify"},
+    {"descricao": "Abrir o painel do Shopify", "palavras": ["shopify"], "tipo": "site", "valor": "https://www.shopify.com/login", "fala": "Abrindo o Shopify"},
 
-    {"palavras": ["tocar", "música", "filme"], "tipo": "funcao", "valor": "musica", "fala": ""},
+    {"descricao": "Procurar uma música ou filme no YouTube (argumento: o nome do que procurar)", "palavras": ["tocar", "música", "filme"], "tipo": "funcao", "valor": "musica", "fala": ""},
 
-    {"palavras": ["pausar", "continuar"], "tipo": "tecla", "valor": "space", "fala": ""},
-    {"palavras": ["aumentar volume"], "tipo": "tecla", "valor": "volumeup", "repetir": 5, "fala": ""},
-    {"palavras": ["diminuir volume"], "tipo": "tecla", "valor": "volumedown", "repetir": 5, "fala": ""},
-    {"palavras": ["silenciar"], "tipo": "tecla", "valor": "volumemute", "fala": ""},
-    {"palavras": ["tela cheia"], "tipo": "tecla", "valor": "f", "fala": ""}
+    {"descricao": "Pausar ou continuar o vídeo ou a música que está tocando", "palavras": ["pausar", "continuar"], "tipo": "tecla", "valor": "space", "fala": ""},
+    {"descricao": "Aumentar o volume", "palavras": ["aumentar volume"], "tipo": "tecla", "valor": "volumeup", "repetir": 5, "fala": ""},
+    {"descricao": "Diminuir o volume", "palavras": ["diminuir volume"], "tipo": "tecla", "valor": "volumedown", "repetir": 5, "fala": ""},
+    {"descricao": "Silenciar o som", "palavras": ["silenciar"], "tipo": "tecla", "valor": "volumemute", "fala": ""},
+    {"descricao": "Colocar o vídeo em tela cheia", "palavras": ["tela cheia"], "tipo": "tecla", "valor": "f", "fala": ""}
   ]
 }

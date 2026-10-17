@@ -14,11 +14,14 @@ from voz import falar, ouvir
 
 PASTA = os.path.dirname(os.path.abspath(__file__))
 
-# Lê os comandos do arquivo comandos.json
+
 with open(os.path.join(PASTA, "comandos.json"), encoding="utf-8") as arquivo:
     CONFIG = json.load(arquivo)
 ATIVACAO = CONFIG["ativacao"]
 COMANDOS = CONFIG["comandos"]
+
+
+DESCRICOES = [c.get("descricao") or "Comando: " + c["palavras"][0] for c in COMANDOS]
 
 
 def musica(comando):
@@ -34,7 +37,7 @@ def musica(comando):
         buscar_youtube(termo)
 
 
-# Funções especiais (as que não cabem no JSON)
+
 FUNCOES = {
     "hora": lambda c: falar(hora_atual()),
     "data": lambda c: falar(data_atual()),
@@ -68,16 +71,34 @@ def rodar_comando(cmd, comando):
     return True
 
 
-def executar(comando):
+def executar_por_palavras(comando):
+
     for cmd in COMANDOS:
         if any(palavra in comando for palavra in cmd["palavras"]):
             return rodar_comando(cmd, comando)
 
-    # Nenhum comando conhecido: manda a pergunta para a IA
-    if comando:
-        interface.definir_estado("pensando")
-        falar(ia.perguntar(comando))
+
+    interface.definir_estado("pensando")
+    falar(ia.perguntar(comando))
     return True
+
+
+def executar(comando):
+    if not comando:
+        return True
+
+    if CONFIG.get("interpretar_com_ia", True):
+        interface.definir_estado("pensando")
+        resultado = ia.entender(comando, DESCRICOES)
+        if resultado is not None:
+            if resultado[0] == "comando":
+                _, indice, argumento = resultado
+                return rodar_comando(COMANDOS[indice], argumento)
+            falar(resultado[1])
+            return True
+        print("IA indisponível: usando as palavras-chave")
+
+    return executar_por_palavras(comando)
 
 
 def principal():
