@@ -5,6 +5,7 @@ import traceback
 import pyautogui
 
 import ia
+import interface
 from apps import abrir_app, abrir_site, buscar_youtube
 from codigo import criar_codigo
 from ditar import ditar
@@ -13,7 +14,7 @@ from voz import falar, ouvir
 
 PASTA = os.path.dirname(os.path.abspath(__file__))
 
-
+# Lê os comandos do arquivo comandos.json
 with open(os.path.join(PASTA, "comandos.json"), encoding="utf-8") as arquivo:
     CONFIG = json.load(arquivo)
 ATIVACAO = CONFIG["ativacao"]
@@ -33,7 +34,7 @@ def musica(comando):
         buscar_youtube(termo)
 
 
-
+# Funções especiais (as que não cabem no JSON)
 FUNCOES = {
     "hora": lambda c: falar(hora_atual()),
     "data": lambda c: falar(data_atual()),
@@ -46,7 +47,7 @@ FUNCOES = {
 }
 
 
-def rodar(cmd, comando):
+def rodar_comando(cmd, comando):
     tipo = cmd["tipo"]
     valor = cmd["valor"]
 
@@ -70,10 +71,11 @@ def rodar(cmd, comando):
 def executar(comando):
     for cmd in COMANDOS:
         if any(palavra in comando for palavra in cmd["palavras"]):
-            return rodar(cmd, comando)
+            return rodar_comando(cmd, comando)
 
-
+    # Nenhum comando conhecido: manda a pergunta para a IA
     if comando:
+        interface.definir_estado("pensando")
         falar(ia.perguntar(comando))
     return True
 
@@ -82,15 +84,27 @@ def principal():
     falar("Jarvis iniciado")
     rodando = True
     while rodando:
-        fala = ouvir()
+        fala = ouvir("esperando")
         if any(nome in fala for nome in ATIVACAO):
+            interface.registrar("Você", fala)
             falar("Pois não?")
             rodando = executar(ouvir())
 
 
-if __name__ == "__main__":
+def rodar():
     try:
         principal()
     except Exception:
         with open(os.path.join(PASTA, "erro.log"), "w", encoding="utf-8") as arquivo:
             arquivo.write(traceback.format_exc())
+
+
+if __name__ == "__main__":
+    if CONFIG.get("janela", True):
+        try:
+            interface.iniciar(rodar)
+        except ImportError:
+            print("tkinter não encontrado: rodando sem janela")
+            rodar()
+    else:
+        rodar()

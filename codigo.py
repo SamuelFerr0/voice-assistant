@@ -2,6 +2,7 @@ import pyautogui
 import pyperclip
 
 from ia import gerar_codigo
+from interface import definir_estado
 from voz import falar, ouvir
 
 
@@ -12,6 +13,7 @@ def criar_codigo():
         falar("Não ouvi nada")
         return
     falar("Gerando o código. Clique onde quer colar.")
+    definir_estado("pensando")
     codigo = gerar_codigo(pedido)
     if not codigo:
         falar("Não consegui gerar")

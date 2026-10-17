@@ -1,4 +1,5 @@
 {
+  "janela": true,
   "ativacao": ["jarvis"],
   "comandos": [
     {"palavras": ["sair", "desligar"], "tipo": "funcao", "valor": "sair", "fala": "Até mais"},
